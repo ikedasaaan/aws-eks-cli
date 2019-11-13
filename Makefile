@@ -1,12 +1,13 @@
-.PHONY: build run
+.PHONY: build run exec
 
 build:
-	docker build --no-cache -t aws-eks-cli .
+	docker build --no-cache -t k8s-cli .
 
 run:
 	docker run -it \
-		-e AWS_ACCESS_KEY_ID=<YOUR AWS_ACCESS_KEY_ID> \
-		-e AWS_SECRET_ACCESS_KEY=<YOUR AWS_SECRET_ACCESS_KEY> \
-		-e AWS_DEFAULT_REGION=<YOUR AWS_DEFAULT_REGION> \
+		--env-file .env  \
+		-v $(CURDIR)/.cache/.kube:/root/.kube \
+		-v $(CURDIR)/.cache/.helm:/root/.helm \
 		-v $(CURDIR)/share:/root/share \
-		aws-eks-cli /bin/bash
+		k8s-cli /bin/zsh
+		

@@ -1,0 +1,4 @@
+.env
+
+.cache/.kube/*
+.cache/.helm/*
